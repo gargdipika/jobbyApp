@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 import './index.css'
 
 class Login extends Component {
-  state = {username: '', password: ''}
+  state = {username: '', password: '', errorMsg: ''}
 
   onChangeUsername = event => {
     this.setState({username: event.target.value})
@@ -27,12 +27,21 @@ class Login extends Component {
     const data = await response.json()
     console.log(data)
     if (response.ok) {
-      Cookies.set('jwtToken', data.jwt_token)
+      const {history} = this.props
+      console.log(history)
+      Cookies.set('jwt_token', data.jwt_token, {expiry: 30})
+      history.replace('/')
+    } else {
+      const errorMsg = data.error_msg
+      console.log(errorMsg)
+      this.setState({errorMsg})
     }
   }
 
   render() {
-    const jwtToken = Cookies.get('jwtToken')
+    const {username, password, errorMsg} = this.state
+    const isShowErr = errorMsg !== ''
+    const jwtToken = Cookies.get('jwt_token')
 
     if (jwtToken !== undefined) {
       return <Redirect to="/" />
@@ -56,6 +65,7 @@ class Login extends Component {
               type="text"
               id="username"
               placeholder="Username"
+              value={username}
             />
           </div>
           <div className="login-input-container">
@@ -68,11 +78,13 @@ class Login extends Component {
               type="password"
               id="password"
               placeholder="Password"
+              value={password}
             />
           </div>
           <button type="submit" className="login-button">
             Login
           </button>
+          {isShowErr && <p className="error-message">*{errorMsg}</p>}
         </form>
       </div>
     )
