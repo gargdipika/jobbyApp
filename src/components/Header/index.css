@@ -1,0 +1,31 @@
+.Header-container {
+  background-color: #272727;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+.logo-header {
+  height: 40px;
+  width: 100px;
+}
+.header-uordered-list {
+  display: flex;
+}
+.link-style {
+  text-decoration: none;
+  margin-left: 10px;
+  color: white;
+}
+.list-style {
+  list-style: none;
+}
+.logout-button {
+  background-color: #6366f1;
+  border: none;
+  height: 36px;
+  color: white;
+  border-radius: 5px;
+  width: 100px;
+  padding: 10px;
+}

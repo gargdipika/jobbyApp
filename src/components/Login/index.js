@@ -28,8 +28,7 @@ class Login extends Component {
     console.log(data)
     if (response.ok) {
       const {history} = this.props
-      console.log(history)
-      Cookies.set('jwt_token', data.jwt_token, {expiry: 30})
+      Cookies.set('jwt_token', data.jwt_token, {expires: 30})
       history.replace('/')
     } else {
       const errorMsg = data.error_msg

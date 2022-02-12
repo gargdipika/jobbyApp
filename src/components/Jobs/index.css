@@ -1,0 +1,133 @@
+.jobs-container {
+  display: flex;
+  background-color: black;
+}
+.profile-container {
+  margin-top: 20px;
+  background-image: url('https://assets.ccbp.in/frontend/react-js/profile-bg.png');
+  background-size: cover;
+  width: 25vw;
+  border-radius: 15px;
+  padding: 20px;
+}
+.left-job-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 35vw;
+  min-height: 100vh;
+}
+.profile-image {
+  height: 50px;
+  width: 50px;
+  margin-bottom: 0;
+}
+.profile-name {
+  color: #6366f1;
+  font-weight: 500;
+  font-size: 20px;
+  font-family: 'Roboto';
+}
+.bio {
+  font-size: 14px;
+}
+.horizontal-line {
+  width: 25vw;
+  margin-top: 20px;
+}
+.employment-unordered-list {
+  color: white;
+  font-family: 'Roboto';
+  width: 25vw;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.employment-heading {
+  font-size: 15px;
+  text-align: left;
+  font-weight: 500;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+.checkbox {
+  margin-right: 10px;
+}
+.employment {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+.retry-button {
+  background-color: #4f46e5;
+  border: none;
+  width: 120px;
+  height: 30px;
+}
+.failure-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.job-data-success-container {
+  background-color: #272727;
+  display: flex;
+  flex-direction: column;
+  width: 60vw;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  border-radius: 15px;
+}
+.top-container {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+}
+.top-inner-container {
+  display: flex;
+  flex-direction: column;
+}
+.company-logo-job-description {
+  height: 60px;
+  width: 60px;
+}
+.title-job {
+  color: white;
+  font-size: 20px;
+  margin-left: 15px;
+  margin-bottom: 0;
+}
+.rating-job {
+  color: white;
+  margin-top: 10px;
+  margin-left: 15px;
+}
+.middle-container {
+  padding-top: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.rating-container {
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+}
+.star {
+  color: #fbbf24;
+}
+.icon {
+  color: white;
+  margin-right: 10px;
+  height: 20px;
+  width: 20px;
+}
+.employment-type {
+  color: white;
+  margin-right: 10px;
+  font-size: 12px;
+}
+.package {
+  color: white;
+  margin-right: 20px;
+}
