@@ -18,7 +18,7 @@ const Header = props => {
   }
   return (
     <div className="Header-container">
-      <Link to="/jobs">
+      <Link to="/">
         <li className="list-style">
           <img
             className="logo-header"

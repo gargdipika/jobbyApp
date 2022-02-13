@@ -74,8 +74,9 @@
   display: flex;
   flex-direction: column;
   width: 60vw;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-left: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
   margin-right: 20px;
   border-radius: 15px;
 }
@@ -130,4 +131,47 @@
 .package {
   color: white;
   margin-right: 20px;
+}
+.horizontal-line-in-job-item {
+  width: 57vw;
+}
+.job-description-heading {
+  color: white;
+  font-size: 20px;
+  font-weight: normal;
+  margin-left: 18px;
+}
+.job-description {
+  color: white;
+  margin-left: 18px;
+  margin-right: 25px;
+  margin-top: 0;
+  font-size: 18px;
+}
+.job-container {
+  padding-left: 0;
+}
+.search-container {
+  display: flex;
+  border: solid #b6c5ff;
+  width: 25vw;
+  border-width: 1px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+.search-bar {
+  height: 35px;
+  background-color: transparent;
+  width: 22vw;
+  padding: 20px;
+  color: white;
+  font-size: 15px;
+}
+.button-search {
+  background-color: #272727;
+  border: none;
+  width: 55px;
+  color: white;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }

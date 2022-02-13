@@ -1,9 +1,10 @@
 import {Component} from 'react'
+import {Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import {AiFillStar} from 'react-icons/ai'
 import {MdLocationOn} from 'react-icons/md'
-import {BsFillBriefcaseFill} from 'react-icons/bs'
+import {BsSearch, BsFillBriefcaseFill} from 'react-icons/bs'
 import Header from '../Header'
 import './index.css'
 
@@ -59,6 +60,7 @@ class Jobs extends Component {
     employmentType: [],
     minPackage: '',
     searchInput: '',
+    searchInputQueryParameter: '',
     apiJobDetailStatus: apiStatusConstant.initial,
     jobData: [],
   }
@@ -70,10 +72,11 @@ class Jobs extends Component {
 
   getJobDetails = async () => {
     this.setState({apiJobDetailStatus: apiStatusConstant.inProgress})
-    const {employmentType, minPackage, searchInput} = this.state
+    const {employmentType, minPackage, searchInputQueryParameter} = this.state
+    console.log(searchInputQueryParameter)
     const employmentString = employmentType.join(',')
     const jwtToken = Cookies.get('jwt_token')
-    const apiJobUrl = `https://apis.ccbp.in/jobs?employment_type=${employmentString}&minimum_package=${minPackage}&search=${searchInput}`
+    const apiJobUrl = `https://apis.ccbp.in/jobs?employment_type=${employmentString}&minimum_package=${minPackage}&search=${searchInputQueryParameter}`
     const options = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
@@ -83,7 +86,6 @@ class Jobs extends Component {
     const responseJob = await fetch(apiJobUrl, options)
     if (responseJob.ok) {
       const jobData = await responseJob.json()
-      console.log(jobData)
       const updatedData = jobData.jobs.map(eachData => ({
         companyLogoUrl: eachData.company_logo_url,
         employmentType: eachData.employment_type,
@@ -94,12 +96,10 @@ class Jobs extends Component {
         rating: eachData.rating,
         title: eachData.title,
       }))
-      console.log(updatedData)
       this.setState({
         apiJobDetailStatus: apiStatusConstant.success,
         jobData: updatedData,
       })
-      // complete it
     } else {
       this.setState({apiJobDetailStatus: apiStatusConstant.failure})
     }
@@ -120,9 +120,17 @@ class Jobs extends Component {
     }
   }
 
+  onChangeSearchInput = event => {
+    this.setState({searchInput: event.target.value})
+  }
+
+  onClickSearchIcon = () => {
+    const {searchInput} = this.state
+    this.setState({searchInputQueryParameter: searchInput}, this.getJobDetails)
+  }
+
   renderJobDataSuccess = () => {
     const {jobData} = this.state
-    console.log(jobData)
     return (
       <div>
         {jobData.map(eachJobDetail => {
@@ -137,31 +145,38 @@ class Jobs extends Component {
             title,
           } = eachJobDetail
           return (
-            <div className="job-data-success-container">
-              <div className="top-container">
-                <img
-                  className="company-logo-job-description"
-                  src={companyLogoUrl}
-                  alt="company logo"
-                />
-                <div className="top-inner-container">
-                  <h1 className="title-job">{title}</h1>
-                  <div className="rating-container">
-                    <AiFillStar className="star" />
-                    <p className="rating-job">{rating}</p>
+            <Link to="/jobs/:id" className="link-style">
+              <li key={id} className="list-style">
+                <div className="job-data-success-container">
+                  <div className="top-container">
+                    <img
+                      className="company-logo-job-description"
+                      src={companyLogoUrl}
+                      alt="company logo"
+                    />
+                    <div className="top-inner-container">
+                      <h1 className="title-job">{title}</h1>
+                      <div className="rating-container">
+                        <AiFillStar className="star" />
+                        <p className="rating-job">{rating}</p>
+                      </div>
+                    </div>
                   </div>
+                  <div className="middle-container">
+                    <div className="rating-container">
+                      <MdLocationOn className="icon" />
+                      <p className="employment-type">{location}</p>
+                      <BsFillBriefcaseFill className="icon" />
+                      <p className="employment-type">{employmentType}</p>
+                    </div>
+                    <p className="package">{packagePerAnnum}</p>
+                  </div>
+                  <hr className="horizontal-line-in-job-item" />
+                  <h1 className="job-description-heading">Description</h1>
+                  <p className="job-description">{jobDescription}</p>
                 </div>
-              </div>
-              <div className="middle-container">
-                <div className="rating-container">
-                  <MdLocationOn className="icon" />
-                  <p className="employment-type">{location}</p>
-                  <BsFillBriefcaseFill className="icon" />
-                  <p className="employment-type">{employmentType}</p>
-                </div>
-                <p className="package">{packagePerAnnum}</p>
-              </div>
-            </div>
+              </li>
+            </Link>
           )
         })}
       </div>
@@ -246,6 +261,7 @@ class Jobs extends Component {
   }
 
   render() {
+    const {searchInput} = this.state
     return (
       <div>
         <Header />
@@ -276,10 +292,11 @@ class Jobs extends Component {
                     <input
                       type="checkbox"
                       className="checkbox"
+                      id="checkbox"
                       value={eachEmployee.employmentTypeId}
                       onClick={onClickEmployee}
                     />
-                    {eachEmployee.label}
+                    <label htmlFor="checkbox"> {eachEmployee.label}</label>
                   </li>
                 )
               })}
@@ -303,19 +320,36 @@ class Jobs extends Component {
                     <input
                       type="radio"
                       className="checkbox"
+                      id="radio"
                       name="salary"
                       value={eachSalaryRange.salaryRangeId}
                       onClick={onClickSalary}
                     />
-                    {eachSalaryRange.label}
+                    <label htmlFor="radio">{eachSalaryRange.label}</label>
                   </li>
                 )
               })}
             </ul>
           </div>
           <div>
-            <input type="text" />
-            {this.renderJobDetail()}
+            <div className="search-container">
+              <input
+                className="search-bar"
+                type="search"
+                placeholder="Search"
+                value={searchInput}
+                onChange={this.onChangeSearchInput}
+              />
+              <button
+                className="button-search"
+                type="button"
+                testid="searchButton"
+                onClick={this.onClickSearchIcon}
+              >
+                <BsSearch className="search-icon" />
+              </button>
+            </div>
+            <ul className="job-container">{this.renderJobDetail()}</ul>
           </div>
         </div>
       </div>
