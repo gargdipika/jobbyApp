@@ -134,6 +134,7 @@
 }
 .horizontal-line-in-job-item {
   width: 57vw;
+  border: solid #6366f1 1px;
 }
 .job-description-heading {
   color: white;
@@ -174,4 +175,11 @@
   color: white;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+.no-jobs-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }

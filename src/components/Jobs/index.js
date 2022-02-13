@@ -131,54 +131,97 @@ class Jobs extends Component {
 
   renderJobDataSuccess = () => {
     const {jobData} = this.state
+    const isEmpty = jobData.length === 0
+    console.log(isEmpty)
     return (
-      <div>
-        {jobData.map(eachJobDetail => {
-          const {
-            companyLogoUrl,
-            employmentType,
-            id,
-            jobDescription,
-            location,
-            packagePerAnnum,
-            rating,
-            title,
-          } = eachJobDetail
-          return (
-            <Link to="/jobs/:id" className="link-style">
-              <li key={id} className="list-style">
-                <div className="job-data-success-container">
-                  <div className="top-container">
-                    <img
-                      className="company-logo-job-description"
-                      src={companyLogoUrl}
-                      alt="company logo"
-                    />
-                    <div className="top-inner-container">
-                      <h1 className="title-job">{title}</h1>
-                      <div className="rating-container">
-                        <AiFillStar className="star" />
-                        <p className="rating-job">{rating}</p>
+      <>
+        {isEmpty ? (
+          <div className="no-jobs-container">
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
+              alt="no jobs"
+            />
+            <h1>No Jobs Found</h1>
+            <p>We could not find any jobs. Try other filters</p>
+          </div>
+        ) : (
+          <ul className="job-container">
+            {jobData.map(eachJobDetail => {
+              const {
+                companyLogoUrl,
+                employmentType,
+                id,
+                jobDescription,
+                location,
+                packagePerAnnum,
+                rating,
+                title,
+              } = eachJobDetail
+              return (
+                <Link key={id} to={`/jobs/${id}`} className="link-style">
+                  <li className="list-style">
+                    <div className="job-data-success-container">
+                      <div className="top-container">
+                        <img
+                          className="company-logo-job-description"
+                          src={companyLogoUrl}
+                          alt="company logo"
+                        />
+                        <div className="top-inner-container">
+                          <h1 className="title-job">{title}</h1>
+                          <div className="rating-container">
+                            <AiFillStar className="star" />
+                            <p className="rating-job">{rating}</p>
+                          </div>
+                        </div>
                       </div>
+                      <div className="middle-container">
+                        <div className="rating-container">
+                          <MdLocationOn className="icon" />
+                          <p className="employment-type">{location}</p>
+                          <BsFillBriefcaseFill className="icon" />
+                          <p className="employment-type">{employmentType}</p>
+                        </div>
+                        <p className="package">{packagePerAnnum}</p>
+                      </div>
+                      <hr className="horizontal-line-in-job-item" />
+                      <h1 className="job-description-heading">Description</h1>
+                      <p className="job-description">{jobDescription}</p>
                     </div>
-                  </div>
-                  <div className="middle-container">
-                    <div className="rating-container">
-                      <MdLocationOn className="icon" />
-                      <p className="employment-type">{location}</p>
-                      <BsFillBriefcaseFill className="icon" />
-                      <p className="employment-type">{employmentType}</p>
-                    </div>
-                    <p className="package">{packagePerAnnum}</p>
-                  </div>
-                  <hr className="horizontal-line-in-job-item" />
-                  <h1 className="job-description-heading">Description</h1>
-                  <p className="job-description">{jobDescription}</p>
-                </div>
-              </li>
-            </Link>
-          )
-        })}
+                  </li>
+                </Link>
+              )
+            })}
+          </ul>
+        )}
+      </>
+    )
+  }
+  // styling of job-failure-container is similar to no-job-container
+
+  renderFailureJobData = () => {
+    const onClickRetryInJobContainer = () => {
+      this.setState(
+        {apiJobDetailStatus: apiStatusConstant.inProgress},
+        this.getJobDetails,
+      )
+    }
+
+    return (
+      <div className="no-jobs-container">
+        <img
+          src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
+          alt="failure view"
+        />
+        <h1>Oops! Something Went Wrong</h1>
+        <p>We cannot seem to find the page you are looking for</p>
+        <button
+          onClick={onClickRetryInJobContainer}
+          type="button"
+          className="logout-button"
+        >
+          Retry
+        </button>
       </div>
     )
   }
@@ -234,12 +277,12 @@ class Jobs extends Component {
     const onClickRetry = () => {
       this.setState(
         {apiProfileStatus: apiStatusConstant.inProgress},
-        this.getProfileData(),
+        this.getProfileData,
       )
     }
     return (
       <div className="failure-container">
-        <button className="retry-button" onClick={onClickRetry} type="button">
+        <button className="logout-button" onClick={onClickRetry} type="button">
           Retry
         </button>
       </div>
@@ -349,7 +392,7 @@ class Jobs extends Component {
                 <BsSearch className="search-icon" />
               </button>
             </div>
-            <ul className="job-container">{this.renderJobDetail()}</ul>
+            {this.renderJobDetail()}
           </div>
         </div>
       </div>
