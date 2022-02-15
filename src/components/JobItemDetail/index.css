@@ -110,3 +110,14 @@
   margin-right: 30px;
   border-radius: 15px;
 }
+.visit-link {
+  color: #6366f1;
+  margin-right: 10px;
+  font-size: 22px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+.link-icon {
+  margin-left: 5px;
+}

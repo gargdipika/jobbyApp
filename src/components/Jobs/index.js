@@ -73,7 +73,7 @@ class Jobs extends Component {
   getJobDetails = async () => {
     this.setState({apiJobDetailStatus: apiStatusConstant.inProgress})
     const {employmentType, minPackage, searchInputQueryParameter} = this.state
-    console.log(searchInputQueryParameter)
+    console.log(employmentType)
     const employmentString = employmentType.join(',')
     const jwtToken = Cookies.get('jwt_token')
     const apiJobUrl = `https://apis.ccbp.in/jobs?employment_type=${employmentString}&minimum_package=${minPackage}&search=${searchInputQueryParameter}`
@@ -132,7 +132,7 @@ class Jobs extends Component {
   renderJobDataSuccess = () => {
     const {jobData} = this.state
     const isEmpty = jobData.length === 0
-    console.log(isEmpty)
+
     return (
       <>
         {isEmpty ? (
@@ -316,15 +316,29 @@ class Jobs extends Component {
               <h1 className="employment-heading">Type of Employment</h1>
               {employmentTypesList.map(eachEmployee => {
                 const onClickEmployee = event => {
-                  this.setState(
-                    prevState => ({
-                      employmentType: [
-                        ...prevState.employmentType,
-                        event.target.value,
-                      ],
-                    }),
-                    this.getJobDetails,
-                  )
+                  const {employmentType} = this.state
+                  console.log(employmentType.includes(event.target.value))
+
+                  if (employmentType.includes(event.target.value) === false) {
+                    this.setState(
+                      prevState => ({
+                        employmentType: [
+                          ...prevState.employmentType,
+                          event.target.value,
+                        ],
+                      }),
+                      this.getJobDetails,
+                    )
+                  } else {
+                    this.setState(
+                      prevState => ({
+                        employmentType: prevState.employmentType.filter(
+                          eachType => eachType !== event.target.value,
+                        ),
+                      }),
+                      this.getJobDetails,
+                    )
+                  }
                 }
 
                 return (

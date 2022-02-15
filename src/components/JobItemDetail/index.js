@@ -2,6 +2,7 @@ import Cookies from 'js-cookie'
 import {Component} from 'react'
 import {AiFillStar} from 'react-icons/ai'
 import {MdLocationOn} from 'react-icons/md'
+import {BiLinkExternal} from 'react-icons/bi'
 import {BsFillBriefcaseFill} from 'react-icons/bs'
 import Loader from 'react-loader-spinner'
 import Header from '../Header'
@@ -132,7 +133,9 @@ class JobItemDetail extends Component {
           <hr className="horizontal-line-in-job-detail-item" />
           <div className="skills-container">
             <h1 className="job-detail-description-heading">Description</h1>
-            <a href={companyWebsiteUrl}>Visit</a>
+            <a className="visit-link" href={companyWebsiteUrl}>
+              Visit <BiLinkExternal className="link-icon" />
+            </a>
           </div>
           <p className="job-detail-description">{jobDescription}</p>
           <h1 className="skill-heading">Skills</h1>
