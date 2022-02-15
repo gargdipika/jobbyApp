@@ -315,16 +315,18 @@ class Jobs extends Component {
             <ul className="employment-unordered-list">
               <h1 className="employment-heading">Type of Employment</h1>
               {employmentTypesList.map(eachEmployee => {
-                const onClickEmployee = event => {
+                const onClickEmployee = () => {
                   const {employmentType} = this.state
-                  console.log(employmentType.includes(event.target.value))
-
-                  if (employmentType.includes(event.target.value) === false) {
+                  console.log('run')
+                  if (
+                    employmentType.includes(eachEmployee.employmentTypeId) ===
+                    false
+                  ) {
                     this.setState(
                       prevState => ({
                         employmentType: [
                           ...prevState.employmentType,
-                          event.target.value,
+                          eachEmployee.employmentTypeId,
                         ],
                       }),
                       this.getJobDetails,
@@ -333,7 +335,8 @@ class Jobs extends Component {
                     this.setState(
                       prevState => ({
                         employmentType: prevState.employmentType.filter(
-                          eachType => eachType !== event.target.value,
+                          eachType =>
+                            eachType !== eachEmployee.employmentTypeId,
                         ),
                       }),
                       this.getJobDetails,
@@ -349,11 +352,15 @@ class Jobs extends Component {
                     <input
                       type="checkbox"
                       className="checkbox"
-                      id="checkbox"
+                      id={`checkbox ${eachEmployee.employmentTypeId}`}
                       value={eachEmployee.employmentTypeId}
                       onClick={onClickEmployee}
                     />
-                    <label htmlFor="checkbox"> {eachEmployee.label}</label>
+                    <label
+                      htmlFor={`checkbox ${eachEmployee.employmentTypeId}`}
+                    >
+                      {eachEmployee.label}
+                    </label>
                   </li>
                 )
               })}
@@ -362,9 +369,9 @@ class Jobs extends Component {
             <ul className="employment-unordered-list">
               <h1 className="employment-heading">Salary Range</h1>
               {salaryRangesList.map(eachSalaryRange => {
-                const onClickSalary = event => {
+                const onClickSalary = () => {
                   this.setState(
-                    {minPackage: event.target.value},
+                    {minPackage: eachSalaryRange.salaryRangeId},
                     this.getJobDetails,
                   )
                 }
@@ -377,12 +384,14 @@ class Jobs extends Component {
                     <input
                       type="radio"
                       className="checkbox"
-                      id="radio"
+                      id={`radio ${eachSalaryRange.salaryRangeId}`}
                       name="salary"
                       value={eachSalaryRange.salaryRangeId}
                       onClick={onClickSalary}
                     />
-                    <label htmlFor="radio">{eachSalaryRange.label}</label>
+                    <label htmlFor={`radio ${eachSalaryRange.salaryRangeId}`}>
+                      {eachSalaryRange.label}
+                    </label>
                   </li>
                 )
               })}

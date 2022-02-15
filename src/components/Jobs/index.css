@@ -167,6 +167,7 @@
   padding: 20px;
   color: white;
   font-size: 15px;
+  outline: none;
 }
 .button-search {
   background-color: #272727;
